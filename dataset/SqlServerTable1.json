@@ -1,0 +1,117 @@
+{
+	"name": "SqlServerTable1",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer1",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [
+			{
+				"name": "Prscrbr_NPI",
+				"type": "bigint",
+				"precision": 19
+			},
+			{
+				"name": "Prscrbr_Last_Org_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Prscrbr_First_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Prscrbr_City",
+				"type": "varchar"
+			},
+			{
+				"name": "Prscrbr_State_Abrvtn",
+				"type": "varchar"
+			},
+			{
+				"name": "Prscrbr_State_FIPS",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Prscrbr_Type",
+				"type": "varchar"
+			},
+			{
+				"name": "Prscrbr_Type_Src",
+				"type": "varchar"
+			},
+			{
+				"name": "Brnd_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Gnrc_Name",
+				"type": "varchar"
+			},
+			{
+				"name": "Tot_Clms",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Tot_30day_Fills",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Tot_Day_Suply",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "Tot_Drug_Cst",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "Tot_Benes",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "GE65_Sprsn_Flag",
+				"type": "varchar"
+			},
+			{
+				"name": "GE65_Tot_Clms",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "GE65_Tot_30day_Fills",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "GE65_Tot_Drug_Cst",
+				"type": "float",
+				"precision": 15
+			},
+			{
+				"name": "GE65_Tot_Day_Suply",
+				"type": "int",
+				"precision": 10
+			},
+			{
+				"name": "GE65_Bene_Sprsn_Flag",
+				"type": "varchar"
+			},
+			{
+				"name": "GE65_Tot_Benes",
+				"type": "int",
+				"precision": 10
+			}
+		],
+		"typeProperties": {
+			"schema": "dbo",
+			"table": "mup_detail"
+		}
+	}
+}
