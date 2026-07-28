@@ -64,18 +64,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"annotations": []
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/DelimitedText1')]",
 			"type": "Microsoft.DataFactory/factories/datasets",
 			"apiVersion": "2018-06-01",
@@ -713,6 +701,34 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/mupdetailcsv')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "AzureDataLakeStorage1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "DelimitedText",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"folderPath": "landing/MUP_Output_File",
+						"fileSystem": "healthecare"
+					},
+					"columnDelimiter": ",",
+					"escapeChar": "\\",
+					"firstRowAsHeader": true,
+					"quoteChar": "\""
+				},
+				"schema": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/AzureDataLakeStorage1')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/SqlServer1')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -738,6 +754,128 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/integrationRuntimes/integrationRuntime1')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServerTable1')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "SqlServer1",
+					"type": "LinkedServiceReference"
+				},
+				"annotations": [],
+				"type": "SqlServerTable",
+				"schema": [
+					{
+						"name": "Prscrbr_NPI",
+						"type": "bigint",
+						"precision": 19
+					},
+					{
+						"name": "Prscrbr_Last_Org_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Prscrbr_First_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Prscrbr_City",
+						"type": "varchar"
+					},
+					{
+						"name": "Prscrbr_State_Abrvtn",
+						"type": "varchar"
+					},
+					{
+						"name": "Prscrbr_State_FIPS",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Prscrbr_Type",
+						"type": "varchar"
+					},
+					{
+						"name": "Prscrbr_Type_Src",
+						"type": "varchar"
+					},
+					{
+						"name": "Brnd_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Gnrc_Name",
+						"type": "varchar"
+					},
+					{
+						"name": "Tot_Clms",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Tot_30day_Fills",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Tot_Day_Suply",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "Tot_Drug_Cst",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "Tot_Benes",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "GE65_Sprsn_Flag",
+						"type": "varchar"
+					},
+					{
+						"name": "GE65_Tot_Clms",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "GE65_Tot_30day_Fills",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "GE65_Tot_Drug_Cst",
+						"type": "float",
+						"precision": 15
+					},
+					{
+						"name": "GE65_Tot_Day_Suply",
+						"type": "int",
+						"precision": 10
+					},
+					{
+						"name": "GE65_Bene_Sprsn_Flag",
+						"type": "varchar"
+					},
+					{
+						"name": "GE65_Tot_Benes",
+						"type": "int",
+						"precision": 10
+					}
+				],
+				"typeProperties": {
+					"schema": "dbo",
+					"table": "mup_detail"
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/SqlServer1')]"
 			]
 		},
 		{
@@ -984,6 +1122,77 @@
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/datasets/Json2')]",
 				"[concat(variables('factoryId'), '/dataflows/FHIR')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/pipeline2')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "Copy data1",
+						"type": "Copy",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "0.12:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"source": {
+								"type": "SqlServerSource",
+								"queryTimeout": "02:00:00",
+								"partitionOption": "None"
+							},
+							"sink": {
+								"type": "DelimitedTextSink",
+								"storeSettings": {
+									"type": "AzureBlobFSWriteSettings"
+								},
+								"formatSettings": {
+									"type": "DelimitedTextWriteSettings",
+									"quoteAllText": true,
+									"fileExtension": ".txt"
+								}
+							},
+							"enableStaging": false,
+							"translator": {
+								"type": "TabularTranslator",
+								"typeConversion": true,
+								"typeConversionSettings": {
+									"allowDataTruncation": true,
+									"treatBooleanAsNumber": false
+								}
+							}
+						},
+						"inputs": [
+							{
+								"referenceName": "SqlServerTable1",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						],
+						"outputs": [
+							{
+								"referenceName": "mupdetailcsv",
+								"type": "DatasetReference",
+								"parameters": {}
+							}
+						]
+					}
+				],
+				"policy": {
+					"elapsedTimeMetric": {}
+				},
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/datasets/SqlServerTable1')]",
+				"[concat(variables('factoryId'), '/datasets/mupdetailcsv')]"
 			]
 		}
 	]
