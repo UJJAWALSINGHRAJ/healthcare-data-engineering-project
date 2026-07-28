@@ -1,0 +1,15 @@
+{
+	"name": "Healthcarebigdata",
+	"properties": {
+		"trustModeClaimForMi": {
+			"value": "Disabled",
+			"editable": true
+		}
+	},
+	"location": "indonesiacentral",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "a7b15346-0bc3-454b-9881-e883c0965ed6",
+		"tenantId": "31e8796d-7a5d-4e50-88a4-05a9b431df5d"
+	}
+}
