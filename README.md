@@ -1,11 +1,10 @@
 # Healthcare Data Engineering Project
 
-
-# Azure Storage Structure
+## Azure Storage Structure
 
 The Azure Data Lake Storage Gen2 container used in this project is organized as follows:
 
-
+```text
 Container: healthecare
 │
 ├── JSON landingFile
@@ -28,7 +27,7 @@ Container: healthecare
     ├── Bronze
     ├── Silver
     └── Gold
-
+```
 
 ## Folder Description
 
