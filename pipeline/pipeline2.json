@@ -21,19 +21,284 @@
 						"partitionOption": "None"
 					},
 					"sink": {
-						"type": "DelimitedTextSink",
+						"type": "ParquetSink",
 						"storeSettings": {
-							"type": "AzureBlobFSWriteSettings"
+							"type": "AzureBlobFSWriteSettings",
+							"copyBehavior": "FlattenHierarchy"
 						},
 						"formatSettings": {
-							"type": "DelimitedTextWriteSettings",
-							"quoteAllText": true,
-							"fileExtension": ".txt"
+							"type": "ParquetWriteSettings"
 						}
 					},
 					"enableStaging": false,
 					"translator": {
 						"type": "TabularTranslator",
+						"mappings": [
+							{
+								"source": {
+									"name": "Prscrbr_NPI",
+									"type": "Int64",
+									"physicalType": "bigint"
+								},
+								"sink": {
+									"name": "Prscrbr_NPI",
+									"type": "Int64",
+									"physicalType": "INT_64"
+								}
+							},
+							{
+								"source": {
+									"name": "Prscrbr_Last_Org_Name",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Prscrbr_Last_Org_Name",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Prscrbr_First_Name",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Prscrbr_First_Name",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Prscrbr_City",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Prscrbr_City",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Prscrbr_State_Abrvtn",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Prscrbr_State_Abrvtn",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Prscrbr_State_FIPS",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Prscrbr_State_FIPS",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "Prscrbr_Type",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Prscrbr_Type",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Prscrbr_Type_Src",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Prscrbr_Type_Src",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Brnd_Name",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Brnd_Name",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Gnrc_Name",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "Gnrc_Name",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "Tot_Clms",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Tot_Clms",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "Tot_30day_Fills",
+									"type": "Double",
+									"physicalType": "float"
+								},
+								"sink": {
+									"name": "Tot_30day_Fills",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "Tot_Day_Suply",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Tot_Day_Suply",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "Tot_Drug_Cst",
+									"type": "Double",
+									"physicalType": "float"
+								},
+								"sink": {
+									"name": "Tot_Drug_Cst",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "Tot_Benes",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "Tot_Benes",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "GE65_Sprsn_Flag",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "GE65_Sprsn_Flag",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "GE65_Tot_Clms",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "GE65_Tot_Clms",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "GE65_Tot_30day_Fills",
+									"type": "Double",
+									"physicalType": "float"
+								},
+								"sink": {
+									"name": "GE65_Tot_30day_Fills",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "GE65_Tot_Drug_Cst",
+									"type": "Double",
+									"physicalType": "float"
+								},
+								"sink": {
+									"name": "GE65_Tot_Drug_Cst",
+									"type": "Double",
+									"physicalType": "DOUBLE"
+								}
+							},
+							{
+								"source": {
+									"name": "GE65_Tot_Day_Suply",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "GE65_Tot_Day_Suply",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							},
+							{
+								"source": {
+									"name": "GE65_Bene_Sprsn_Flag",
+									"type": "String",
+									"physicalType": "varchar"
+								},
+								"sink": {
+									"name": "GE65_Bene_Sprsn_Flag",
+									"type": "String",
+									"physicalType": "UTF8"
+								}
+							},
+							{
+								"source": {
+									"name": "GE65_Tot_Benes",
+									"type": "Int32",
+									"physicalType": "int"
+								},
+								"sink": {
+									"name": "GE65_Tot_Benes",
+									"type": "Int32",
+									"physicalType": "INT_32"
+								}
+							}
+						],
 						"typeConversion": true,
 						"typeConversionSettings": {
 							"allowDataTruncation": true,
@@ -49,7 +314,7 @@
 				],
 				"outputs": [
 					{
-						"referenceName": "mupdetailcsv",
+						"referenceName": "ParquetOutput",
 						"type": "DatasetReference"
 					}
 				]

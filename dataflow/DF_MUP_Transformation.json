@@ -1,0 +1,78 @@
+{
+	"name": "DF_MUP_Transformation",
+	"properties": {
+		"type": "MappingDataFlow",
+		"typeProperties": {
+			"sources": [
+				{
+					"dataset": {
+						"referenceName": "SqlServerTable1",
+						"type": "DatasetReference"
+					},
+					"name": "source1"
+				}
+			],
+			"sinks": [
+				{
+					"dataset": {
+						"referenceName": "ParquetOutput",
+						"type": "DatasetReference"
+					},
+					"name": "sink1"
+				}
+			],
+			"transformations": [
+				{
+					"name": "derivedColumn1"
+				},
+				{
+					"name": "derivedColumn2"
+				},
+				{
+					"name": "derivedColumn3"
+				}
+			],
+			"scriptLines": [
+				"source(output(",
+				"          Prscrbr_NPI as long,",
+				"          Prscrbr_Last_Org_Name as string,",
+				"          Prscrbr_First_Name as string,",
+				"          Prscrbr_City as string,",
+				"          Prscrbr_State_Abrvtn as string,",
+				"          Prscrbr_State_FIPS as integer,",
+				"          Prscrbr_Type as string,",
+				"          Prscrbr_Type_Src as string,",
+				"          Brnd_Name as string,",
+				"          Gnrc_Name as string,",
+				"          Tot_Clms as integer,",
+				"          Tot_30day_Fills as double,",
+				"          Tot_Day_Suply as integer,",
+				"          Tot_Drug_Cst as double,",
+				"          Tot_Benes as integer,",
+				"          GE65_Sprsn_Flag as string,",
+				"          GE65_Tot_Clms as integer,",
+				"          GE65_Tot_30day_Fills as double,",
+				"          GE65_Tot_Drug_Cst as double,",
+				"          GE65_Tot_Day_Suply as integer,",
+				"          GE65_Bene_Sprsn_Flag as string,",
+				"          GE65_Tot_Benes as integer",
+				"     ),",
+				"     allowSchemaDrift: false,",
+				"     validateSchema: true,",
+				"     isolationLevel: 'READ_UNCOMMITTED',",
+				"     format: 'table') ~> source1",
+				"source1 derive(bill_amount = random(9000) + 1000) ~> derivedColumn1",
+				"derivedColumn1 derive(paid_amount = bill_amount * 0.8) ~> derivedColumn2",
+				"derivedColumn2 derive(decision = iif(paid_amount >= 5000,'Approved','Rejected')) ~> derivedColumn3",
+				"derivedColumn3 sink(allowSchemaDrift: true,",
+				"     validateSchema: false,",
+				"     format: 'parquet',",
+				"     umask: 0022,",
+				"     preCommands: [],",
+				"     postCommands: [],",
+				"     skipDuplicateMapInputs: true,",
+				"     skipDuplicateMapOutputs: true) ~> sink1"
+			]
+		}
+	}
+}
